@@ -8,6 +8,7 @@ package com.example.myguardianwatch.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -31,26 +33,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myguardianwatch.presentation.theme.BrandBlack
-import com.example.myguardianwatch.presentation.theme.BrandNavy
-import com.example.myguardianwatch.presentation.theme.BrandTextSecondary
-import com.example.myguardianwatch.presentation.theme.BrandWhite
-import com.example.myguardianwatch.presentation.theme.rememberRoundScreenContentPadding
 import androidx.wear.compose.material3.AppScaffold
 import androidx.wear.compose.material3.Button
-import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.ButtonDefaults.buttonColors
 import androidx.wear.compose.material3.CircularProgressIndicator
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import com.example.myguardianwatch.R
+import com.example.myguardianwatch.presentation.theme.BrandNavy
 import com.example.myguardianwatch.presentation.theme.MyGuardianWatchTheme
+import com.example.myguardianwatch.presentation.theme.RoadSideOrange
+import com.example.myguardianwatch.presentation.theme.RoadSideRed
+import com.example.myguardianwatch.presentation.theme.rememberRoundScreenContentPadding
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -88,37 +91,58 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
     ScreenScaffold(
         timeText = {},
         scrollIndicator = {},
-        modifier = Modifier.background(color = Color.White)
+        modifier = Modifier.background(color = BrandNavy)
     ) { contentPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(contentPadding)
+//                .padding(contentPadding)
                 .padding(roundPadding)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-           /* Box(
+            /* Box(
+                 modifier = Modifier
+                     .fillMaxWidth()
+                     .background(color = BrandWhite, shape = CardShape)
+                     .padding(horizontal = 12.dp, vertical = 8.dp),
+                 contentAlignment = Alignment.Center,
+             ) {
+                 Text(
+                     text = stringResource(R.string.urgent_assist_title),
+                     style = MaterialTheme.typography.titleSmall.copy(
+                         fontWeight = FontWeight.SemiBold,
+                         color = BrandBlack,
+                     ),
+                     textAlign = TextAlign.Center,
+                     maxLines = 1,
+                 )
+             }*/
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.img_app_icon),
+                contentDescription = stringResource(R.string.urgent_assist_title),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = BrandWhite, shape = CardShape)
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.urgent_assist_title),
-                    style = MaterialTheme.typography.titleSmall.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        color = BrandBlack,
-                    ),
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                )
-            }*/
-
-            Spacer(modifier = Modifier.height(10.dp))
-
+                    .height(56.dp)
+                    .width(56.dp),
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = stringResource(R.string.my_guardian_link),
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.bodySmall.copy(
+                    color = Color.White,
+                    lineHeight = 14.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                textAlign = TextAlign.Center,
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Box(modifier = Modifier.height(1.dp).width(20.dp).background(RoadSideOrange))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = when (uiState) {
                     UrgentAssistUiState.Idle -> stringResource(R.string.urgent_assist_subtitle)
@@ -131,13 +155,13 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
                 },
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = BrandTextSecondary,
+                    color = Color.White,
                     lineHeight = 14.sp,
                 ),
                 textAlign = TextAlign.Center,
             )
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             if (uiState == UrgentAssistUiState.Sending) {
                 CircularProgressIndicator(
@@ -153,9 +177,11 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
                                 WatchUrgentAssistSender.SendResult.Success -> {
                                     uiState = UrgentAssistUiState.Sent
                                 }
+
                                 WatchUrgentAssistSender.SendResult.NoPhoneConnected -> {
                                     uiState = UrgentAssistUiState.NoPhone
                                 }
+
                                 is WatchUrgentAssistSender.SendResult.Error -> {
                                     statusMessage = result.message
                                     uiState = UrgentAssistUiState.Error
@@ -168,11 +194,11 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
                         .heightIn(min = 40.dp, max = 44.dp),
                     enabled = uiState != UrgentAssistUiState.Sending,
                     shape = CardShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = BrandNavy,
-                        contentColor = BrandWhite,
-                        disabledContainerColor = BrandNavy.copy(alpha = 0.5f),
-                        disabledContentColor = BrandWhite.copy(alpha = 0.7f),
+                    colors = buttonColors(
+                        containerColor = RoadSideRed,
+                        contentColor = RoadSideRed,
+                        disabledContainerColor = RoadSideRed.copy(alpha = 0.5f),
+                        disabledContentColor = RoadSideRed.copy(alpha = 0.7f),
                     ),
                 ) {
                     Box(
@@ -180,11 +206,12 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = stringResource(R.string.urgent_assist_button),
+                            text = stringResource(R.string.protect_me),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 fontWeight = FontWeight.SemiBold,
                                 lineHeight = 14.sp,
-                                fontSize = 10.sp,
+                                fontSize = 12.sp,
+                                color = Color.White
                             ),
                             textAlign = TextAlign.Center,
                             maxLines = 2,

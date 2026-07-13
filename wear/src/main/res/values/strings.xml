@@ -2,10 +2,13 @@
     <string name="app_name">My Guardian Watch</string>
     <string name="hello_world">Hello, %1$s!</string>
     <string name="urgent_assist_title">Urgent Assist</string>
-    <string name="urgent_assist_subtitle">Tap to open My Guardian Link and send your Urgent Assist alert.</string>
+    <string name="urgent_assist_subtitle">Tap Protect Me</string>
+<!--    <string name="urgent_assist_subtitle">Tap to open My Guardian Link and send your Urgent Assist alert.</string>-->
     <string name="urgent_assist_button">Send Urgent Assist</string>
     <string name="urgent_assist_sending">Opening phone app and sending alert…</string>
     <string name="urgent_assist_sent">Alert sent. Check your phone.</string>
-    <string name="urgent_assist_no_phone">Phone not connected. Pair your watch with the My Guardian Link app.</string>
+    <string name="urgent_assist_no_phone">Phone not connected.<!-- Pair your watch with the My Guardian Link app.--></string>
     <string name="urgent_assist_error">Unable to send alert. Try again.</string>
+    <string name="protect_me">PROTECT ME</string>
+    <string name="my_guardian_link">My Guardian Link</string>
 </resources>
