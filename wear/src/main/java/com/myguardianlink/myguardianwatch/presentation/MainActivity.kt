@@ -47,12 +47,12 @@ import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.ScreenScaffold
 import androidx.wear.compose.material3.Text
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
+import com.my_guardian_link.R
 import com.myguardianlink.myguardianwatch.presentation.theme.BrandNavy
 import com.myguardianlink.myguardianwatch.presentation.theme.MyGuardianWatchTheme
 import com.myguardianlink.myguardianwatch.presentation.theme.RoadSideOrange
 import com.myguardianlink.myguardianwatch.presentation.theme.RoadSideRed
 import com.myguardianlink.myguardianwatch.presentation.theme.rememberRoundScreenContentPadding
-import com.myguardianlink.watchkitapp.R
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {

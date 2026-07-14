@@ -26,10 +26,6 @@
             android:name="com.google.android.wearable.standalone"
             android:value="false" />
 
-        <meta-data
-            android:name="com.google.android.wearable.beta.app"
-            android:resource="@xml/android_wearable_app" />
-
         <activity
             android:name="com.myguardianlink.myguardianwatch.presentation.MainActivity"
             android:exported="true"
