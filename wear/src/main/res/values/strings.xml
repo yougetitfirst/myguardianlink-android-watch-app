@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Guardian Watch</string>
+    <string name="app_name">My Guardian Link</string>
     <string name="hello_world">Hello, %1$s!</string>
     <string name="urgent_assist_title">Urgent Assist</string>
     <string name="urgent_assist_subtitle">Tap Protect Me</string>

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myguardianwatch"
+    namespace = "com.myguardianlink.watchkitapp"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -12,11 +12,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.myguardianwatch"
+        applicationId = "com.myguardianlink.watchkitapp"
         minSdk = 30
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
     }
 

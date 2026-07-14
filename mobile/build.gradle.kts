@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myguardianwatch"
+    namespace = "com.myguardianlink.watchkitapp"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.myguardianwatch"
+        applicationId = "com.myguardianlink.watchkitapp"
         minSdk = 30
         targetSdk = 36
         versionCode = 1
