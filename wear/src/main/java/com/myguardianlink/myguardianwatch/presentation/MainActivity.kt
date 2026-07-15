@@ -10,7 +10,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +20,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -39,7 +37,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.wear.compose.material3.AppScaffold
 import androidx.wear.compose.material3.Button
@@ -102,19 +99,16 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
         },
         modifier = Modifier.background(BrandBlack),
     ) { contentPadding ->
-        // Padding after verticalScroll (like clipToPadding=false): bottom inset scrolls with
-        // content so Protect Me can move fully on-screen. No top scaffold padding = no blank band.
+        // contentPadding after verticalScroll = clipToPadding=false so large fonts can scroll
+        // fully into the visible area without a fixed viewport inset clipping controls.
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
                 .verticalScroll(scrollState)
-                .padding(bottom = contentPadding.calculateBottomPadding()),
+                .padding(contentPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
         ) {
-            Spacer(modifier = Modifier.height(6.dp))
-
             Image(
                 painter = painterResource(id = R.drawable.img_app_icon),
                 contentDescription = stringResource(R.string.urgent_assist_title),
@@ -131,10 +125,12 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
                 textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(6.dp))
-            Box(modifier = Modifier
-                .height(1.dp)
-                .width(20.dp)
-                .background(RoadSideOrange))
+            Box(
+                modifier = Modifier
+                    .height(1.dp)
+                    .width(20.dp)
+                    .background(RoadSideOrange),
+            )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = when (uiState) {
@@ -182,7 +178,7 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
                         }
                     },
                     modifier = Modifier
-                        .wrapContentWidth()
+                        .fillMaxWidth()
                         .heightIn(min = 45.dp),
                     enabled = uiState != UrgentAssistUiState.Sending,
                     shape = CardShape,
@@ -193,21 +189,15 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
                         disabledContentColor = BrandWhite.copy(alpha = 0.7f),
                     ),
                 ) {
-                    Box(
+                    Text(
+                        text = stringResource(R.string.protect_me),
                         modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(R.string.protect_me),
-                            style = MaterialTheme.typography.labelLarge.copy(
-                                fontWeight = FontWeight.SemiBold,
-                                color = BrandWhite,
-                            ),
-                            textAlign = TextAlign.Center,
-                            maxLines = 2,
-                            fontSize = 12.sp
-                        )
-                    }
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.SemiBold,
+                            color = BrandWhite,
+                        ),
+                        textAlign = TextAlign.Center,
+                    )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
             }
