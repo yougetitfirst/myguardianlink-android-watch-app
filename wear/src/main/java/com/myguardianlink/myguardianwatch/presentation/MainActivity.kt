@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,13 +33,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -59,7 +56,6 @@ import com.myguardianlink.myguardianwatch.presentation.theme.BrandWhite
 import com.myguardianlink.myguardianwatch.presentation.theme.MyGuardianWatchTheme
 import com.myguardianlink.myguardianwatch.presentation.theme.RoadSideOrange
 import com.myguardianlink.myguardianwatch.presentation.theme.RoadSideRed
-import com.myguardianlink.myguardianwatch.presentation.theme.rememberRoundScreenContentPadding
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -96,7 +92,6 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
     var uiState by remember { mutableStateOf(UrgentAssistUiState.Idle) }
     var statusMessage by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
-    val roundPadding = rememberRoundScreenContentPadding()
     val scrollState = rememberScrollState()
 
     ScreenScaffold(
@@ -107,22 +102,16 @@ fun UrgentAssistScreen(sender: WatchUrgentAssistSender) {
         },
         modifier = Modifier.background(BrandBlack),
     ) { contentPadding ->
+        // Padding after verticalScroll (like clipToPadding=false): bottom inset scrolls with
+        // content so Protect Me can move fully on-screen. No top scaffold padding = no blank band.
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(contentPadding)
                 .padding(horizontal = 16.dp)
-//                .padding(
-//                    top = contentPadding.calculateTopPadding(),
-//                    bottom = contentPadding.calculateBottomPadding() + roundPadding.calculateBottomPadding(),
-//                    start = roundPadding.calculateLeftPadding(
-//                        LayoutDirection.Ltr
-//                    ) + contentPadding.calculateLeftPadding(LayoutDirection.Ltr),
-//                    end = roundPadding.calculateRightPadding(LayoutDirection.Rtl) + contentPadding.calculateLeftPadding(LayoutDirection.Rtl)
-//                )
-                .verticalScroll(scrollState),
+                .verticalScroll(scrollState)
+                .padding(bottom = contentPadding.calculateBottomPadding()),
             horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center,
         ) {
             Spacer(modifier = Modifier.height(6.dp))
 
